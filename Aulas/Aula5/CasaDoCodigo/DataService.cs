@@ -24,7 +24,7 @@ namespace CasaDoCodigo
 
         public void InicializaDB()
         {
-            contexto.Database.EnsureCreated();
+            contexto.Database.Migrate();
 
             List<Livro> livros = GetLivros();
 
