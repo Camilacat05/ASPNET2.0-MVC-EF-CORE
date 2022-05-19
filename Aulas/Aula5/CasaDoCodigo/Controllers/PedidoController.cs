@@ -12,12 +12,16 @@ namespace CasaDoCodigo.Controllers
     {
         private readonly IProdutoRepository produtoRepository;
         private readonly IPedidoRepository pedidoRepository;
+        private readonly IItemPedidoRepository itemPedidoRepository; //injetando o repositório no Controller
+
 
         public PedidoController(IProdutoRepository produtoRepository,
-            IPedidoRepository pedidoRepository)
+            IPedidoRepository pedidoRepository, IItemPedidoRepository itemPedidoRepository) // passa a interfacee e o repositório no constructor do Controller
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
+            this.itemPedidoRepository = itemPedidoRepository; 
+
         }
 
         public IActionResult Carrossel()
@@ -49,10 +53,11 @@ namespace CasaDoCodigo.Controllers
         [HttpPost] //para definir que a requisição é post
         public void Updatequantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
         {
-          //FromBody indica que os dadoss irão vim no corpo da requisição, co caso o item pedidos também vem o data dentro
-          // com a quantidade e id do pedido 
+            //FromBody indica que os dadoss irão vim no corpo da requisição, co caso o item pedidos também vem o data dentro
+            // com a quantidade e id do pedido 
+            itemPedidoRepository.UpdateQuant(itemPedido);
 
-            
+
         }
 
     }
