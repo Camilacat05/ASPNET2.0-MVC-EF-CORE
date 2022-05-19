@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Models;
+using CasaDoCodigo.Models.ViewModels;
 using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,8 +37,10 @@ namespace CasaDoCodigo.Controllers
                 pedidoRepository.AddItem(codigo);
             }
 
-            Pedido pedido = pedidoRepository.GetPedido();
-            return View(pedido.Itens);
+
+            List<ItemPedido> itens = pedidoRepository.GetPedido().Itens;
+            CarrinhoViewModel carrinhoViewModel = new CarrinhoViewModel(itens);
+           return base.View(carrinhoViewModel);
         }
 
         public IActionResult Cadastro()
@@ -51,11 +54,11 @@ namespace CasaDoCodigo.Controllers
             return View(pedido);
         }
         [HttpPost] //para definir que a requisição é post
-        public void Updatequantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
+        public UpdateQuantidadeResponse Updatequantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
         {
             //FromBody indica que os dadoss irão vim no corpo da requisição, co caso o item pedidos também vem o data dentro
             // com a quantidade e id do pedido 
-            itemPedidoRepository.UpdateQuant(itemPedido);
+          return  pedidoRepository.UpdateQuant(itemPedido);
 
 
         }

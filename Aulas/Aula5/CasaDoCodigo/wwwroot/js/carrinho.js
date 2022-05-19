@@ -36,10 +36,30 @@
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)//tranforma o obj em String
+             // passando os dados
 
-        });  // passando os dados 
-        debugger;// utilizando JQUERY PARA DÁ FUNÇÃO AO BOTÃO
+        }).done(function (response) {
+
+            let itemPedido = response.itemPedido; // o itempedido de resposta que é atualizado automaticamente na página
+            let linhaDoItem = $('[item-id=' + itemPedido.id + ']')
+            linhaDoItem.find('input').val(itemPedido.quantidade);
+                // passa a qauntidade que foi alterado e após atualiza o sub-total e total do carrinho a partir da qauntidade atualizada
+            linhaDoItem.find('[subtotal]').html((itemPedido.subtotal).duasCasas()); //atualizando o HTML com o novo valor com apenas 2 casas decimais após a ,
+                debugger;// utilizando JQUERY PARA DÁ FUNÇÃO AO BOTÃO
+        });
+             $('[numero-itens]').html('Total: ' + carrinhoViewModel.itens.length + ' itens'); //pega o tamanho do array de itens e coloca no total de itens e insere no HTML
+
+
+             if (itemPedido.quantidade == 0) { //caso a quantidade seja 0 a linha do item é removida
+                 linhaDoItem.remove();
+             }
+       
     }
 }
 
 var carrinho = new Carrinho();
+
+
+Number.prototype.duasCasas = function () {
+    return this.toFixed(2).replace('.', ',');
+};// foramatando a saída do total e sub-total  para 2 casas decimais após o . ou ,

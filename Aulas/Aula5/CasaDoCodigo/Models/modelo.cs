@@ -74,9 +74,12 @@ namespace CasaDoCodigo.Models
         [Required]
         [DataMember]
         public int Quantidade { get; private set; }
-        [Required]
+        [Required] //Especifica que o valor de um campo de dados é obrigatório.
         [DataMember]
         public decimal PrecoUnitario { get; private set; }
+        
+        [DataMember]
+        public decimal Subtotal => Quantidade * PrecoUnitario;
 
         public ItemPedido()
         {

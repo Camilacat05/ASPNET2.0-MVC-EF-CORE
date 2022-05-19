@@ -8,31 +8,27 @@ namespace CasaDoCodigo.Repositories
 {
     public interface IItemPedidoRepository
     {
-        void UpdateQuant(ItemPedido itemPedido);
+        ItemPedido GetItemPedido(int itemPedidoId);
+        void RemoveItemPedido(int itemPedidoId); // método para remover os itens do carrinho pelo o id do item
     }
 
     public class ItemPedidoRepository : BaseRepository<ItemPedido>, IItemPedidoRepository
-    {
+    { 
         public ItemPedidoRepository(ApplicationContext contexto) : base(contexto)
+        {      
+        }
+            public ItemPedido GetItemPedido(int itemPedidoId)
         {
-
+            return
+            dbSet
+            .Where(ip => ip.Id == itemPedidoId)
+            .SingleOrDefault();
 
         }
 
-        public void UpdateQuant(ItemPedido itemPedido)
-        {
-            // este metodo altera a quantidade do produto no carrinho  e grava no banco de dados. 
-            var itemPedidoDB =
-                 dbSet
-                .Where(ip => ip.Id == itemPedido.Id)
-                .SingleOrDefault();
-
-            if (itemPedidoDB != null)
-            {
-                itemPedidoDB.AtualizaQuantidade(itemPedido.Quantidade);
-                contexto.SaveChanges();// Salva as alterações no Banco de Dados
-            }
-
+        public void RemoveItemPedido(int itemPedidoId)
+        { 
+            dbSet.Remove(GetItemPedido(itemPedidoId));//Remove o tem do carrinho e do bancco de dados 
         }
     }
 }
