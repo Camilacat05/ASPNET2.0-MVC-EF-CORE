@@ -45,7 +45,14 @@ namespace CasaDoCodigo.Controllers
 
         public IActionResult Cadastro()
         {
-            return View();
+            var pedido = pedidoRepository.GetPedido(); // vai pegar o pedido realizado com os itens
+
+            if (pedido == null) //caso nao tenha nenhum pedido
+            {
+                return RedirectToAction("Carrosel");// o cliente vai ser redirecionado para a página inicial que nesse caso é a página de carrosel
+            }
+
+            return View(pedido.Cadastro);
         }
 
         public IActionResult Resumo()
