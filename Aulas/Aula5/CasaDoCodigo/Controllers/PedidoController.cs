@@ -55,6 +55,8 @@ namespace CasaDoCodigo.Controllers
             return View(pedido.Cadastro);
         }
         [HttpPost] // define  que o metodo e post e que nao e possivel acessar pelo o endereco do Brownser
+        //uma forma de proteger a Action do Controller contra ataques CRSF(Cross-site Request Forgery)
+        [ValidateAntiForgeryToken] //regra de seguranca, faz com que a aplicacao forneca o token na requisicao, para que seja concluida e autorizada o compartillhamento de informacao. Valida o tolken no momento em que recebemos uma requisição.
         public IActionResult Resumo(Cadastro cadastro)//o resumo vai receber os dados do cadastro pelo o metodo post 
         {
             if (ModelState.IsValid) //verifica o estado do modelo cadastro que se estiver valido, vai para o resumo com os dados validado, se n, e redirecionado pro cadastro novamente para refazer 
@@ -66,6 +68,7 @@ namespace CasaDoCodigo.Controllers
  
         
         [HttpPost] //para definir que a requisição é post
+        
         public UpdateQuantidadeResponse UpdateQuantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
         {
             //FromBody indica que os dadoss irão vim no corpo da requisição, co caso o item pedidos também vem o data dentro

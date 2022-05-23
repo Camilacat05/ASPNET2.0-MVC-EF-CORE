@@ -30,13 +30,20 @@
             Quantidade: novaQtde
         };
 }
-    postQuantidade(data) {
+         postQuantidade(data) {
+
+             let token = $('[name=__RequestVerificationToken]').val();
+
+             let headers = {};//! O token deve ser fornecido como um valor do cabeçalho (headers).
+             headers['RequestVerificationToken'] = token; //fornecendo o token da req por meio do ajax e verifica a autenticidade do token
+
         $.ajax({
             url: '/pedido/updatequantidade',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(data)//tranforma o obj em String
+            data: JSON.stringify(data),//tranforma o obj em String
              // passando os dados
+            headers: headers
 
         }).done(function (response) {
 

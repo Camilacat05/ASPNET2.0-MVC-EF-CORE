@@ -62,6 +62,19 @@ namespace CasaDoCodigo.Models
         public string UF { get; set; } = "";
         [Required(ErrorMessage = "O CEP deve ser Obrigatorio")]
         public string CEP { get; set; } = "";
+
+        internal void Update(Cadastro novoCadastro)
+        {
+            this.Bairro = novoCadastro.Bairro;
+            this.CEP = novoCadastro.CEP;
+            this.Complemento = novoCadastro.Complemento;
+            this.Email = novoCadastro.Email;
+            this.Endereco = novoCadastro.Endereco;
+            this.Municipio = novoCadastro.Municipio;
+            this.Nome = novoCadastro.Nome;
+            this.Telefone = novoCadastro.Telefone;
+            this.UF = novoCadastro.UF;
+        }
     }
     [DataContract] // colocada na  classe e podem ser serializados
     public class ItemPedido : BaseModel
