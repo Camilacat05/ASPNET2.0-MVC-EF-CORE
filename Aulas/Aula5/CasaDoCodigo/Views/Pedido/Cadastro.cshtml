@@ -14,29 +14,34 @@
                 <div class="form-group">
                     <label class="control-label" for="nomeCliente">Nome do Cliente</label>
                     <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do Cliente" asp-for="@Model.Nome"> <!-- aqui é inserido uma tag helper para pegar o nome do tipo input no html -->
-                    <span asp-validation-for="@Model.Nome" class="text-danger"></span> <!-- -->
+                    <span asp-validation-for="@Model.Nome" class="text-danger"></span> <!--validacao no lado ho html na hr do preenchimento das informacoes, no lado do cliente -->
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Email" asp-for="@Model.Email">
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="telefone">Telefone</label>
                     <input type="text" class="form-control" id="telefone" placeholder="Telefone" asp-for="@Model.Telefone">
+                    <span asp-validation-for="@Model.Telefone" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label" for="endereco">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" placeholder="Endereço"asp-for="@Model.Endereco">
+                    <input type="text" class="form-control" id="endereco" placeholder="Endereço" asp-for="@Model.Endereco">
+                    <span asp-validation-for="@Model.Endereco" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="complemento">Complemento</label>
-                    <input type="text" class="form-control" id="complemento" placeholder="Complemento"asp-for="@Model.Complemento">
+                    <input type="text" class="form-control" id="complemento" placeholder="Complemento" asp-for="@Model.Complemento">
+                    <span asp-validation-for="@Model.Complemento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="bairro">Bairro</label>
                     <input type="text" class="form-control" id="bairro" placeholder="Bairro" asp-for="@Model.Bairro"> <!-- significa a mesma coisa que Cadastro.Bairro, a taghelper faz o biding do elemento com a propriedade-->
+                    <span asp-validation-for="@Model.Bairro" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -47,6 +52,7 @@
                 <div class="form-group">
                     <label class="control-label" for="UF">UF</label>
                     <select class="form-control single-select" name="UF" asp-for="@Model.UF">
+                        <span asp-validation-for="@Model.UF" class="text-danger"></span>
                         <option selected value="">[Selecione o estado]</option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
@@ -80,6 +86,7 @@
                 <div class="form-group">
                     <label class="control-label" for="cep">CEP</label>
                     <input type="text" class="form-control" id="cep" placeholder="CEP" asp-for="@Model.CEP">
+                    <span asp-validation-for="@Model.CEP" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">

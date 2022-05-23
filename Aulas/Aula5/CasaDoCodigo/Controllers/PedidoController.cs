@@ -54,21 +54,28 @@ namespace CasaDoCodigo.Controllers
 
             return View(pedido.Cadastro);
         }
-
-        public IActionResult Resumo()
+        [HttpPost] // define  que o metodo e post e que nao e possivel acessar pelo o endereco do Brownser
+        public IActionResult Resumo(Cadastro cadastro)//o resumo vai receber os dados do cadastro pelo o metodo post 
         {
-            Pedido pedido = pedidoRepository.GetPedido();
-            return View(pedido);
+            if (ModelState.IsValid) //verifica o estado do modelo cadastro que se estiver valido, vai para o resumo com os dados validado, se n, e redirecionado pro cadastro novamente para refazer 
+            {
+                return View(pedidoRepository.UpdateCadastro(cadastro));//Isso mesmo! Caso o modelo seja válido, os dados serão gravados. Caso contrário, a chamada é redirecionada para a action "Cadastro".
+            }
+            return RedirectToAction("Cadastro");
         }
+ 
+        
         [HttpPost] //para definir que a requisição é post
-        public UpdateQuantidadeResponse Updatequantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
+        public UpdateQuantidadeResponse UpdateQuantidade([FromBody] ItemPedido itemPedido) //os métodos do projeto
         {
             //FromBody indica que os dadoss irão vim no corpo da requisição, co caso o item pedidos também vem o data dentro
             // com a quantidade e id do pedido 
-          return  pedidoRepository.UpdateQuant(itemPedido);
+             return  pedidoRepository.UpdateQuant(itemPedido);
 
 
         }
 
     }
+
 }
+

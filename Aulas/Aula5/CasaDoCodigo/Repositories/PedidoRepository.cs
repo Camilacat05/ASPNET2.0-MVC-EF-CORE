@@ -15,19 +15,22 @@ namespace CasaDoCodigo.Repositories
         Pedido GetPedido();
         void AddItem(string codigo);
         UpdateQuantidadeResponse UpdateQuant(ItemPedido itemPedido);
+        Pedido UpdateCadastro(Cadastro cadastro);
     }
 
     public class PedidoRepository : BaseRepository<Pedido>, IPedidoRepository
     {
         private readonly IHttpContextAccessor contextAccessor;
         private readonly IItemPedidoRepository itemPedidoRepository; //injenção de dep
+        private readonly ICadastroRepository cadastroRepository;
 
 
         public PedidoRepository(ApplicationContext contexto,
-            IHttpContextAccessor contextAccessor,IItemPedidoRepository itemPedidoRepository) : base(contexto)
+            IHttpContextAccessor contextAccessor,IItemPedidoRepository itemPedidoRepository, ICadastroRepository cadastroRepository) : base(contexto)
         {
             this.contextAccessor = contextAccessor;
             this.itemPedidoRepository = itemPedidoRepository;
+            this.cadastroRepository = cadastroRepository;
         }
 
         public void AddItem(string codigo)
@@ -63,8 +66,9 @@ namespace CasaDoCodigo.Repositories
             var pedidoId = GetPedidoId();
             var pedido = dbSet
                 .Include(p => p.Itens)
-                    .ThenInclude(i => i.Produto)
-                .Where(p => p.Id == pedidoId)
+                    .ThenInclude(i => i.Produto)//na consulta trazer os dados dos itens, do pedido e do cadastro, pelo o id
+                .Include(j => j.Cadastro)
+                    .Where(p => p.Id == pedidoId)
                 .SingleOrDefault();
 
             if (pedido == null)
@@ -110,6 +114,13 @@ namespace CasaDoCodigo.Repositories
                 return new UpdateQuantidadeResponse(itemPedidoDB, carrinhoViewModel);
             }
             throw new ArgumentException("ItemPedido não encontrado");
+        }
+
+        public Pedido UpdateCadastro(Cadastro cadastro)
+        {
+            var pedido = GetPedido();//primeiro pega o pedido 
+            cadastroRepository.Update(pedido.Cadastro.Id, cadastro);// depois navega pro cadastro atravez do pedido e pegao id do cadastro
+            return pedido;
         }
     }
 }
